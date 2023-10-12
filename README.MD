@@ -1,5 +1,7 @@
-Audiobook Maker with Facebook's Englisg TTS model
+Audiobook Maker with Facebook's English TTS model
+
 Introduction
+
 Welcome to AudioBoogie! This application transforms your PDF text into an audiobook using an AI Text-to-Speech (TTS) model. With a simple and user-friendly setup, turn any PDF book into an audio format effortlessly. Just follow the steps below, and voila, you have your audiobook ready to listen!
 
 How to Use
