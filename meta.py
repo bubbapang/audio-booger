@@ -58,8 +58,19 @@ tokenizer = AutoTokenizer.from_pretrained("facebook/mms-tts-eng")
 
 # Generate text chunks directly from PDF
 # Extract and process only the first 10% of pages for quick testing
-text_chunks = pdf2text(input_name, chunk_size=100, portion=0.015)    
+text_chunks = pdf2text(input_name, chunk_size=100, portion=1.0)    
 
-# testing without pydub
-concatenated_audio_np = np.concatenate([tts(chunk, model, tokenizer) for chunk in text_chunks])
+# Initialize an empty numpy array for storing the concatenated audio data
+concatenated_audio_np = np.array([]).astype(np.float32)
+
+total_chunks = len(text_chunks)  # Total number of chunks
+
+# Using enumerate to get both the index (idx) and the chunk
+for idx, chunk in enumerate(text_chunks):
+    concatenated_audio_np = np.concatenate([concatenated_audio_np, tts(chunk, model, tokenizer)])
+    
+    # Calculate and print the percentage completed so far
+    percentage_completed = ((idx + 1) / total_chunks) * 100
+    print(f'Processed {idx + 1} of {total_chunks} chunks ({percentage_completed:.2f}%)')
+
 scipy.io.wavfile.write("book.wav", int(model.config.sampling_rate), concatenated_audio_np)
